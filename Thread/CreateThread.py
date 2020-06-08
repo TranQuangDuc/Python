@@ -111,5 +111,30 @@ thread.start()
 thread.join()
 print("Done.")
 
+#*************************************************************
+#Thread local data
+#import threading
+
+count = 0
+def foo(thread_name, num):
+    global count
+    local_data = threading.local()
+    local_data.local_name = thread_name
+    local_data.x = 2 * num
+    while count < 50:
+        if count % 2 == 0:
+            print(local_data.x,"- \t" + local_data.local_name + ": \t", count)
+        count = count + 1
+
+thread1 = threading.Thread(target=foo, args=("Thread1",2))
+thread2 = threading.Thread(target=foo, args=("Thread2",3))
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print("Done.")
 
 
